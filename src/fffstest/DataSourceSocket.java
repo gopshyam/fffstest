@@ -16,10 +16,8 @@ import org.apache.hadoop.fs.Path;
 
 
 public class DataSourceSocket {
-	private static final String hostName = "69.166.47.60";
-	private static final int portNumber = 15000;
 	private static final int NUM_STREAMS = 1000;
-	private static final int MAX_RECORDS = 1000;
+	private static final int MAX_RECORDS = 10000;
 	
 	private static final String CONF_NAME = "fs.defaultFS";
 	private static final String CONF_VALUE = "hdfs://localhost:9000";
@@ -47,7 +45,7 @@ public class DataSourceSocket {
 				//Initialize file stuff and threads here.
 				//dsConnList.add(new DataSourceConnection(hostName, portNumber, i, fs));
 				//int numRecords = dsConnList.get(i-1).writeRecord();
-				DataSourceConnection dataSourceConnection = new DataSourceConnection(hostName, portNumber, i, fs);
+				DataSourceConnection dataSourceConnection = new DataSourceConnection(i, fs);
 				writerThreadList.add(new WriterThread(dataSourceConnection, MAX_RECORDS));
 				//System.out.println(numRecords);
 			}

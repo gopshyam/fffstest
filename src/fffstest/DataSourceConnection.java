@@ -18,6 +18,8 @@ public class DataSourceConnection {
 	private InputStream in;
 	private FSDataOutputStream fsos;
 	private DataOutputStream dos;
+	private static final String dataSourceHost = "69.166.47.60";
+	private static final int dataSourcePort = 15000;
 	private static final String OUTPUT_FILE_FORMAT = "/testfiles/stream_%d";
 	private static final int TIME_OFFSET = 6;
 	private static final int TIME_LENGTH = 4;
@@ -26,7 +28,7 @@ public class DataSourceConnection {
 	
 	private int recordsWritten = 0;
 	
-	public DataSourceConnection(String hostName, int portNumber, int stream_number, FileSystem fs) throws UnknownHostException, IOException {
+	public DataSourceConnection(int stream_number, FileSystem fs) throws UnknownHostException, IOException {
 		this.streamNumber = stream_number;
 		Path outputFilePath = new Path(String.format(OUTPUT_FILE_FORMAT, streamNumber));
 		if (fs.exists(outputFilePath)) {
@@ -34,7 +36,7 @@ public class DataSourceConnection {
 		}
 		fsos = fs.create(outputFilePath);
 		dos = new DataOutputStream(fsos);
-		dataSourceSocket = new Socket(hostName, portNumber);
+		dataSourceSocket = new Socket(dataSourceHost, dataSourcePort);
 		out = new PrintWriter(dataSourceSocket.getOutputStream(), true);
 		in = dataSourceSocket.getInputStream();
 		String requestString = String.format("%d\n\0", streamNumber);

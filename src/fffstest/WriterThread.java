@@ -22,7 +22,7 @@ public class WriterThread extends Thread {
 			while(numRecords < maxRecords) {
 				numRecords = dataSourceConnection.writeRecord();
 			}
-			System.out.println(String.format("Writer thread for stream %d has written %d records", dataSourceConnection.getStreamNumber(), numRecords));
+			//System.out.println(String.format("Writer thread for stream %d has written %d records", dataSourceConnection.getStreamNumber(), numRecords));
 			dataSourceConnection.closeConnection();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
